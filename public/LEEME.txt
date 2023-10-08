@@ -1,0 +1,2 @@
+Despliegue en neubox:
+- Canmbiar contenido de Public a html/njguerrero.com/Smaug

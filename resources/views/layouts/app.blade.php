@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-	@include('layouts.partials.styles')
+	@include('layouts.partials.htmlheader')
     
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -92,7 +92,8 @@
         @yield('content')
     </div>
 
-	@include('layouts.partials.scripts')
-    @yield('local-scripts')
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/smaug.js') }}"></script>
 </body>
 </html>

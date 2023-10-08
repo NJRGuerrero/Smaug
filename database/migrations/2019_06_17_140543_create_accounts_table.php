@@ -20,6 +20,7 @@ class CreateAccountsTable extends Migration
             $table->integer('account_type_id');
             $table->string('name');
             $table->double('balance');
+            $table->boolean('active');
             $table->text('notes');
             $table->timestamps();
             $table->softDeletes();

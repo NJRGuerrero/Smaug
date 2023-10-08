@@ -6,7 +6,7 @@
         <div class="col-md-10 col-md-offset-1">
             <ul class="nav nav-tabs tabs-border">
                 <li class="active"><a href="#div_main" data-toggle="tab">General</a></li>
-                <li><a href="#div_accounts" onClick="searchAccounts()">Mis Cuentas</a></li>
+                <li><a href="#div_accounts" data-toggle="tab">Mis Cuentas</a></li>
                 <li><a href="#div_movements" data-toggle="tab">Planeación de movimientos</a></li>
                 <li><a href="#div_transactions" data-toggle="tab">Confirmar Transacciones</a></li>
                 <li><a href="#div_reports" data-toggle="tab">Reportes</a></li>
@@ -21,14 +21,64 @@
                 </div>
                 <div role="tabpanel" class="tab-pane" id="div_accounts">
                     <div class="panel-heading">
-                        <button type="button" class="btn btn-success pull-right btn-sm" onClick="newAccount()">
+                        <button type="button" class="btn btn-success pull-right btn-sm" onClick="openModal('mdl_account')">
                             <i class="fas fa-plus-square"></i>
                             Nueva Cuenta
                         </button>
                     </div>
                     <br>
                     <div class="panel-body">
-                        <div id="div_accounts_table"></div>
+                        <table id="tbl_accounts" class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre</th>
+                                    <th>Tipo</th>
+                                    <th>Balance</th>
+                                    <th>Notas</th>
+                                    <th>Estatus</th>
+                                    <th>Editar</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbdy_accounts">
+                                <tr>
+                                    <td>1</td>
+                                    <td>Banamex 1</td>
+                                    <td>Nomina</td>
+                                    <td>$7,000.00 MXN</td>
+                                    <td>Cambiar plastico</td>
+                                    <td>
+                                        <div class="chkDiv chkOnOff">
+                                            <input type="checkbox">
+                                            <label class="chkIcon"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-xs">
+                                            <i class="fas fa-pen"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Banamex 2</td>
+                                    <td>Inversión</td>
+                                    <td>$52,000.00 MXN</td>
+                                    <td>Retorno diario</td>
+                                    <td>
+                                        <div class="chkDiv chkGoodBad">
+                                            <input type="checkbox" checked>
+                                            <label class="chkIcon"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-xs">
+                                            <i class="fas fa-pen"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="div_movements">
@@ -285,7 +335,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" style="cursor:pointer !important;" data-dismiss="modal">
+                <button type="button" class="close" style="cursor:pointer !important;">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <!-- SUBTITULO -->
@@ -297,18 +347,19 @@
             </div>
             <div class="modal-body justify-content-center small admin-form theme-primary">
                 <div class="panel-body panel" style="background:#fcfcfc !important;">
-                    <form id="frm_account" novalidate>
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                    <form id="frm_account">
                         <div class="section row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-12">
                                 <label class="field">
                                     <input id="txt_account_name" type="text" name="name" required>
                                     <label for="txt_account_name">Nombre</label>
                                 </label>
                             </div>
+                        </div>
+                        <div class="section row">
                             <div class="col-sm-3">
                                 <label class="field">
-                                    <select id="slt_account_type" name="accountTypeId" required>
+                                    <select id="slt_account_type">
                                         <option></option>
                                         <option>Nomina</option>
                                         <option>Ahorro</option>
@@ -322,31 +373,40 @@
                             </div>
                             <div class="col-sm-3">
                                 <label class="field">
-                                    <select id="slt_account_currency" name="currencyId" required>
+                                    <select id="slt_account_currency">
                                         <option></option>
-                                        <option value="1">Peso Mexicano (MXN)</option>
-                                        <option value="2">Dolar Americano (USD)</option>
-                                        <option value="3">Euro (EUR)</option>
+                                        <option>Peso Mexicano (MXN)</option>
+                                        <option>Dolar Americano (USD)</option>
+                                        <option>Euro (EUR)</option>
                                     </select>
                                     <label>Moneda</label>
                                 </label>
                             </div>
                             <div class="col-sm-3 test" class="" >
                                 <label class="field">
-                                    <input id="num_account_balance" type="number" name="balance" value="" required>
-                                    <label for="num_account_balance">Saldo</label>
+                                    <input id="txt_account_balance" type="number" name="name" value="" required>
+                                    <label for="txt_account_balance">Saldo</label>
+                                </label>
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="field">
+                                    <label>Estatus:</label>
+                                    <div class="chkDiv chkOnOff">
+                                        <input type="checkbox">
+                                        <label class="chkIcon" data-checked="Activo" data-unchecked="Inactivo"></label>
+                                    </div>
                                 </label>
                             </div>
                         </div>
                         <div class="section row">                                    
                             <div class="col-sm-12">
                                 <label class="field">
-                                    <textarea id="txta_account_notes" name="notes" required style="resize:none"></textarea>
-                                    <label for="txta_account_notes">Notas</label>
+                                    <textarea id="txta_account_notes" name="description" ></textarea>
+                                    <label for="txta_account_notes">Descripción</label>
                                 </label>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-success pull-right btn-sm">
+                        <button type="button" class="btn btn-success pull-right btn-sm">
                             <i class="fas fa-check"></i>
                             Guardar
                         </button>
@@ -361,7 +421,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" style="cursor:pointer !important;" data-dismiss="modal">
+                <button type="button" class="close" style="cursor:pointer !important;">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <!-- SUBTITULO -->
@@ -535,7 +595,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" style="cursor:pointer !important;" data-dismiss="modal">
+                <button type="button" class="close" style="cursor:pointer !important;">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <!-- SUBTITULO -->
